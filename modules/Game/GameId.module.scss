@@ -1,0 +1,58 @@
+@import '../../styles/variables.scss';
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  @media (max-width: $mobile) {
+    font-size: 12px;
+    gap: 5px;
+  }
+}
+
+.gameIdText {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration-style: solid;
+  }
+}
+
+.copyButton {
+  white-space: nowrap;
+}
+
+.qrPopover {
+  max-width: 250px;
+}
+
+.qrContent {
+  padding: 15px;
+}
+
+.qrCodeWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  svg {
+    display: block;
+  }
+}
+
+.qrText {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}

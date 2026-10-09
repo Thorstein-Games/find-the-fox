@@ -1,0 +1,167 @@
+@import '../styles/variables.scss';
+
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+.content {
+  line-height: 1.6;
+
+  > h1 {
+    color: $black;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  > h2 {
+    border-bottom: 2px solid $green;
+    color: $black;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  > h3 {
+    color: $black;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  > p {
+    color: $black;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  > ul,
+  > ol {
+    color: $black;
+    margin: 1rem 0;
+    padding-left: 2rem;
+
+    > li {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  > strong {
+    color: $black;
+    font-weight: bold;
+  }
+}
+
+.section {
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.faqItem {
+  background: rgba(255, 255, 255, 0.7);
+  border-left: 4px solid $green;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+
+  > h3 {
+    color: $black;
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  > p {
+    margin-bottom: 0;
+  }
+}
+
+.benefitsList {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 2rem 0;
+}
+
+.benefit {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 1.5rem;
+
+  > h3 {
+    color: $black;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    margin-top: 0;
+  }
+
+  > p {
+    margin-bottom: 0;
+  }
+}
+
+.occasionsList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin: 2rem 0;
+}
+
+.occasion {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+
+  > h3 {
+    color: $black;
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  > p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.testimonial {
+  background: rgba(255, 255, 255, 0.8);
+  border-left: 4px solid $yellow;
+  font-style: italic;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+
+  &::before {
+    content: '"';
+    font-size: 2rem;
+    opacity: 0.5;
+  }
+
+  &::after {
+    content: '"';
+    font-size: 2rem;
+    opacity: 0.5;
+  }
+}

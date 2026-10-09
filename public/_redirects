@@ -1,0 +1,2 @@
+# Netlify: serve the room shell for any room code (GitHub Pages uses 404.html instead).
+/room/*  /room/[roomCode]/index.html  200

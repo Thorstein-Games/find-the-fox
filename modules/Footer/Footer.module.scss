@@ -1,0 +1,170 @@
+@import '../../styles/variables';
+
+.footer {
+  align-items: center;
+  background: $blue;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.linkList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.link {
+  color: #fff;
+  opacity: 0.85;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: $green_dark;
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.copy {
+  margin: 0;
+  opacity: 0.6;
+}
+
+.socialLinks {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-left: 24px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.socialIcon {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  opacity: 0.85;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.facebookIcon {
+  &:hover,
+  &:focus-visible {
+    color: #1877f2;
+  }
+}
+
+.patreonIcon {
+  &:hover,
+  &:focus-visible {
+    color: #ff424d;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-2deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(2deg) scale(1.05);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.moreGamesButton {
+  background-color: #9333ea;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  font-weight: 500;
+  overflow: hidden;
+  padding: 0.5rem 1.5rem; /* py-2 px-6 */
+  position: relative;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.moreGamesButton:hover {
+  animation:
+    rainbow 2s linear infinite,
+    wobble 0.5s ease-in-out;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000);
+  background-size: 200% 200%;
+  box-shadow:
+    0 0 20px rgba(255, 0, 255, 0.5),
+    0 0 40px rgba(0, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.moreGamesButton:hover::before {
+  animation: sparkle 0.6s ease-in-out infinite;
+  content: '✨';
+  left: 10px;
+  position: absolute;
+}
+
+.moreGamesButton:hover::after {
+  animation: sparkle 0.6s ease-in-out infinite 0.3s;
+  content: '✨';
+  position: absolute;
+  right: 10px;
+}

@@ -1,0 +1,157 @@
+@import 'custom';
+@import 'chat';
+
+body,
+html {
+  color: $black;
+  font-family:
+    'Roboto',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+html {
+  background: $yellow;
+}
+
+body {
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  background: $yellow;
+  font-size: 16px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+hr {
+  border: 0.05rem solid black;
+  height: 0;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+h1,
+h2 {
+  font-family: 'Permanent Marker', cursive;
+}
+
+#__next {
+  background: repeating-conic-gradient($green 0% 25%, $yellow 0% 50%) 50% / 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  position: relative;
+
+  @media (min-width: $tablet) {
+    border: 10px $yellow solid;
+  }
+}
+
+.main-content-wrapper {
+  position: relative;
+}
+
+.marker {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.dot1 {
+  animation: visibility 1.5s linear infinite;
+}
+
+@keyframes visibility {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot2 {
+  animation: visibility2 1.5s linear infinite;
+}
+
+@keyframes visibility2 {
+  0% {
+    opacity: 0;
+  }
+  21% {
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot3 {
+  animation: visibility3 1.5s linear infinite;
+}
+
+@keyframes visibility3 {
+  0% {
+    opacity: 0;
+  }
+  43% {
+    opacity: 0;
+  }
+  44% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hidden-fox {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  width: 100%;
+  z-index: -1;
+
+  .inner-hidden-fox {
+    color: $blue;
+    display: flex;
+    margin-right: 32px;
+    text-shadow: -2px 0px #fff;
+  }
+
+  .hidden-fox-words {
+    font-family: 'Permanent Marker', cursive;
+    margin-bottom: 0;
+    margin-left: 12px;
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../styles/variables.scss';
+
+.wrapper {
+  background-color: $yellow;
+  margin-top: 50px;
+  padding: 20px;
+
+  > h1,
+  > h2 {
+    text-align: center;
+  }
+
+  > p {
+    margin: 0;
+  }
+}
+
+.banner {
+  display: block;
+  margin: 0 auto;
+}
+
+.svgWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.svgContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

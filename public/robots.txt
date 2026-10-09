@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow dynamic room pages from being indexed
+Disallow: /room/
+
+Sitemap: https://www.find-the-fox.com/sitemap.xml
+
+Crawl-delay: 1

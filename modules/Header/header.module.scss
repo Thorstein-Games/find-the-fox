@@ -1,0 +1,64 @@
+@import '../../styles/variables.scss';
+
+$header-height: 45px;
+
+.header {
+  height: $header-height;
+  margin-bottom: 1rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.header-col {
+  align-items: center;
+  display: inline-flex;
+  height: 100%;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.header-connection {
+  align-items: center;
+  background-color: $yellow;
+  border-bottom-right-radius: 20px;
+  color: #000;
+  display: flex;
+  font-size: 14px;
+  padding: 12px;
+  user-select: none;
+
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  @media (min-width: $tablet) {
+    padding: 12px 16px 16px;
+  }
+}
+
+.connection-label {
+  margin-right: 8px;
+}
+
+.connected {
+  background-color: $good-connection;
+}
+
+.notConnected {
+  background-color: $bad-connection;
+}
+
+.circle {
+  border: 1px solid #000;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
+.header-separator {
+  background: #000;
+  height: 12px;
+  margin: 0 8px;
+  width: 1px;
+}

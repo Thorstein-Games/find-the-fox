@@ -1,0 +1,92 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      HAS_MEGINGJORD_PAT: ${{ secrets.MEGINGJORD_PAT != '' }}
+    steps:
+      # megingjord (Thorstein-Games/megingjord) is the private game server.
+      # playwright.config.ts boots it from ../megingjord, so it's checked out
+      # as a sibling. The default GITHUB_TOKEN can't read another private repo:
+      # this needs a PAT with read access stored as the MEGINGJORD_PAT secret
+      # (same setup as sheeple-game).
+      - name: Skip without MEGINGJORD_PAT
+        if: env.HAS_MEGINGJORD_PAT != 'true'
+        run: echo "::warning::MEGINGJORD_PAT secret not set - skipping e2e tests."
+
+      - name: Checkout find-the-fox
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        uses: actions/checkout@v4
+        with:
+          path: find-the-fox
+
+      # Use the megingjord branch with the same name as this PR's branch when
+      # there is one (server + client changes developed together), else main.
+      - name: Pick megingjord ref
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        id: megingjord-ref
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          TOKEN: ${{ secrets.MEGINGJORD_PAT }}
+        run: |
+          if git ls-remote --exit-code --heads "https://x-access-token:${TOKEN}@github.com/Thorstein-Games/megingjord.git" "$BRANCH" > /dev/null; then
+            echo "ref=$BRANCH" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=main" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout megingjord
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: Thorstein-Games/megingjord
+          ref: ${{ steps.megingjord-ref.outputs.ref }}
+          token: ${{ secrets.MEGINGJORD_PAT }}
+          path: megingjord
+
+      - uses: pnpm/action-setup@v4
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        with:
+          package_json_file: find-the-fox/package.json
+
+      - uses: actions/setup-node@v4
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        with:
+          node-version-file: find-the-fox/.nvmrc
+          cache: pnpm
+          cache-dependency-path: |
+            find-the-fox/pnpm-lock.yaml
+            megingjord/pnpm-lock.yaml
+
+      - name: Install dependencies
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        run: |
+          (cd find-the-fox && pnpm install --frozen-lockfile)
+          (cd megingjord && pnpm install --frozen-lockfile)
+
+      - name: Install Playwright browser
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        working-directory: find-the-fox
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run e2e tests
+        if: env.HAS_MEGINGJORD_PAT == 'true'
+        working-directory: find-the-fox
+        run: pnpm test:e2e
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() && env.HAS_MEGINGJORD_PAT == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: find-the-fox/playwright-report/
+          retention-days: 14
