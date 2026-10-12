@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import PageLayout from '../modules/PageLayout';
 import { RoomPage, roomCodeFromPath } from '../modules/RoomPage';
+import { stripBasePath } from '../lib/fox/basePath';
 
 /**
  * GitHub Pages serves this for any path it has no file for - including room
@@ -14,7 +15,7 @@ const NotFound = () => {
   const [mode, setMode] = useState<'pending' | 'room' | 'missing'>('pending');
 
   useEffect(() => {
-    setMode(roomCodeFromPath(window.location.pathname) ? 'room' : 'missing');
+    setMode(roomCodeFromPath(stripBasePath(window.location.pathname)) ? 'room' : 'missing');
   }, []);
 
   if (mode === 'room') return <RoomPage />;

@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import type { ChatMessage } from '../../lib/fox/types';
+import type { ChatEntry } from '../../lib/fox/types';
 import Launcher from './Launcher';
+import { toBubbles } from './types';
 
 interface ChatProps {
   headerName: string;
   playerName: string;
   /** null until the history has loaded */
-  messages: ChatMessage[] | null;
+  messages: ChatEntry[] | null;
   onSend: (message: string, type?: 'emoji') => void;
 }
 
@@ -22,10 +23,14 @@ const Chat = ({ messages, onSend, playerName, headerName }: ChatProps) => {
     const before = previous.current;
     previous.current = messages;
     if (before === null || messages === before || !messages) return;
-    const latest = messages[messages.length - 1]?.timestamp ?? 0;
-    const prevLatest = before[before.length - 1]?.timestamp ?? 0;
-    if (latest > prevLatest && !isOpen) setNewMessagesCount((count) => count + 1);
+    // A live message is appended after the previous last entry; a resent history (reconnect) isn't.
+    const appended =
+      messages.length > 0 &&
+      (before.length === 0 ? messages.length === 1 : messages[messages.length - 2] === before[before.length - 1]);
+    if (appended && !isOpen) setNewMessagesCount((count) => count + 1);
   }, [messages]);
+
+  const bubbles = useMemo(() => toBubbles(messages ?? []), [messages]);
 
   const handleOpen = () => {
     setIsOpen((open) => !open);
@@ -36,7 +41,7 @@ const Chat = ({ messages, onSend, playerName, headerName }: ChatProps) => {
     <Launcher
       showEmoji
       onMessageWasSent={({ type, message }) => onSend(message, type)}
-      messageList={messages ?? []}
+      messageList={bubbles}
       newMessagesCount={newMessagesCount}
       handleClick={handleOpen}
       isOpen={isOpen}

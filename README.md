@@ -48,12 +48,22 @@ The client talks to `ws://localhost:2567` on localhost and to `wss://megingjord.
 
 ## Deploying (GitHub Pages)
 
-`.github/workflows/deploy.yml` builds and publishes `out/` on every push to `main`. One-time setup:
+`.github/workflows/deploy.yml` builds and publishes `out/` on every push to the repository's default branch. You can also run it by hand from the Actions tab. Pages must be set to **Source: GitHub Actions** (Settings → Pages).
 
-1. **Settings → Pages → Source: GitHub Actions.**
-2. **Settings → Pages → Custom domain:** `find-the-fox.com`. Then point DNS at GitHub Pages: apex `A`/`AAAA` records and a `www` `CNAME` to `thorstein-games.github.io`.
-3. On the Megingjord deployment, add the site to the allowed origins, for example `CORS_ORIGIN=…,https://find-the-fox.com,https://www.find-the-fox.com`. Without this, browsers can't reach the matchmaker.
-4. Optional: set a `GAME_SERVER_URL` repository variable to point the build at a different server.
+Until a custom domain is set, the site lives at **https://thorstein-games.github.io/find-the-fox/**. The workflow reads that sub-path from GitHub (`configure-pages`) and builds with it (`NEXT_PUBLIC_BASE_PATH`). To try a sub-path build locally: `NEXT_PUBLIC_BASE_PATH=/find-the-fox pnpm build && node scripts/serve-static.mjs out 3000 /find-the-fox`.
+
+For the game to work there, the Megingjord deployment must:
+- include the Find the Fox rooms (megingjord PR #4), and
+- allow the site's origin: add `https://thorstein-games.github.io` to its `CORS_ORIGIN`. Without it, browsers can't reach the matchmaker.
+
+Optional: set a `GAME_SERVER_URL` repository variable to point the build at a different Megingjord.
+
+**Moving to find-the-fox.com (later):**
+1. In Settings → Pages, set the custom domain to `find-the-fox.com`.
+2. Point DNS at GitHub Pages: apex `A`/`AAAA` records, and a `www` `CNAME` to `thorstein-games.github.io`.
+3. Add `https://find-the-fox.com,https://www.find-the-fox.com` to Megingjord's `CORS_ORIGIN`.
+
+The next deploy then builds for the domain root automatically.
 
 Netlify also works with no changes: build with `pnpm build` and publish `out`.
 

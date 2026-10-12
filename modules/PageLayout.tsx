@@ -7,6 +7,7 @@ import { siteConfig } from '../lib/fox/config';
 import useIsMobile from '../hooks/useIsMobile';
 import { ErrorBoundary } from './ErrorBoundary';
 import Footer from './Footer/Footer';
+import { asset } from '../lib/fox/basePath';
 
 const defaultTitle = 'Find the Fox – Free Online Party Game Like The Chameleon';
 const defaultDescription = `Play Find the Fox, a free online party game inspired by The Chameleon. Guess, bluff, and outsmart your friends in this hilarious hidden-identity game!`;
@@ -73,7 +74,7 @@ const Layout = ({
                 priority
                 height={isMobile ? 100 : 128}
                 width={isMobile ? 100 : 128}
-                src="/fox.png"
+                src={asset('/fox.png')}
               />
               <div className="hidden-fox-words">
                 <h3>

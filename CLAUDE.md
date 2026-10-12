@@ -26,6 +26,8 @@ pnpm test:e2e     # build + Playwright against ../megingjord (boots it via playw
 - **`lib/fox/legacyView.ts`**: folds server state (keyed by session ID) plus the secret into the original name-keyed `roomState`/`gameState` shapes the `modules/Game` components use.
 - **Routing**: room URLs are `/room/<CODE>`. `pages/room/[roomCode].tsx` and `pages/404.tsx` both render `modules/RoomPage.tsx`, which reads the code from `window.location`. Static hosts serve 404.html for unknown paths, and Netlify has `public/_redirects`.
 - **Toasts**: everything goes through `lib/fox/toastBus.ts`. Toasts emitted while no `<Toasts>` is mounted (mid-navigation) are held for the next one.
+- **Base path**: the site may be served from a sub-path (GitHub Pages project URL `/find-the-fox`, via `NEXT_PUBLIC_BASE_PATH`). `next/link`/`router.push` handle it. Raw asset paths, share URLs and `window.location` parsing must go through `lib/fox/basePath.ts`.
+- **Chat** uses megingjord's shared `chat` / `chat_history` protocol (`ChatEntry`). `modules/Chat/types.ts` groups entries into the bubble shape the chat UI renders.
 - `lib/fox/wordSheet.ts` mirrors megingjord's `src/games/find-the-fox/wordSheet.ts`. Keep them in sync.
 
 ## Cross-repo notes

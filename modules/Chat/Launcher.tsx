@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 
-import type { ChatMessage } from '../../lib/fox/types';
+import type { ChatBubble } from './types';
 import ChatWindow from './ChatWindow';
 import type { OutgoingMessage } from './types';
+import { asset } from '../../lib/fox/basePath';
 
 interface LauncherProps {
   onMessageWasSent: (message: OutgoingMessage) => void;
   newMessagesCount?: number;
   isOpen: boolean;
   handleClick?: () => void;
-  messageList: ChatMessage[];
+  messageList: ChatBubble[];
   mute?: boolean;
   showEmoji?: boolean;
   username: string;
@@ -44,7 +45,7 @@ const Launcher = ({
     if (mute) {
       return;
     }
-    const nextMessage: Partial<ChatMessage> = messageList[messageList.length - 1] || {};
+    const nextMessage: Partial<ChatBubble> = messageList[messageList.length - 1] || {};
     const isIncoming = nextMessage.username !== username && nextMessage.prevUser !== username;
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -67,11 +68,11 @@ const Launcher = ({
       <div className={classList.join(' ')} onClick={onClick} onKeyDown={onClick}>
         <MessageCount count={newMessagesCount} open={open} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="sc-open-icon" src="/chat/close-icon.png" alt="close icon" />
+        <img className="sc-open-icon" src={asset('/chat/close-icon.png')} alt="close icon" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="sc-closed-icon" src="/chat/logo-no-bg.svg" alt="chat bubble" />
+        <img className="sc-closed-icon" src={asset('/chat/logo-no-bg.svg')} alt="chat bubble" />
         <audio ref={audio}>
-          <source src="/chat/notification.mp3" type="audio/mpeg" />
+          <source src={asset('/chat/notification.mp3')} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
       </div>

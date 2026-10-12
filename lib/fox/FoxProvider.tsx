@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { FOX_GAME_ROOM, FOX_LOBBY_ROOM, getGameServerUrl } from './config';
 import { getPlayerId, getStoredName, setStoredName } from './identity';
 import { emitToast } from './toastBus';
-import type { ChatMessage, HostPreferences, Leaderboard, RoomListing, Toast } from './types';
+import { appendChat, type ChatEntry, type HostPreferences, type Leaderboard, type RoomListing, type Toast } from './types';
 
 /**
  * The site-wide connection: every tab stays joined to megingjord's single
@@ -26,7 +26,7 @@ interface FoxContextValue {
   rooms: RoomListing[];
   leaderboard: Leaderboard | null;
   /** null until the lobby history arrives */
-  lobbyChat: ChatMessage[] | null;
+  lobbyChat: ChatEntry[] | null;
   /** Claim a name for this browser. Resolves to an error message, or null on success. */
   claimName: (name: string) => Promise<string | null>;
   /** Give up the current name (the player is choosing a new one). */
@@ -51,7 +51,7 @@ export const FoxProvider = ({ children }: { children: ReactNode }) => {
   const [playersOnline, setPlayersOnline] = useState<string[]>([]);
   const [rooms, setRooms] = useState<RoomListing[]>([]);
   const [leaderboard, setLeaderboard] = useState<Leaderboard | null>(null);
-  const [lobbyChat, setLobbyChat] = useState<ChatMessage[] | null>(null);
+  const [lobbyChat, setLobbyChat] = useState<ChatEntry[] | null>(null);
 
   const lobbyRef = useRef<Room | null>(null);
   const pendingClaim = useRef<((error: string | null) => void) | null>(null);
@@ -82,16 +82,16 @@ export const FoxProvider = ({ children }: { children: ReactNode }) => {
         lobbyRef.current = lobby;
         setConnected(true);
 
-        lobby.onMessage('lobby_state', (state: { rooms: RoomListing[]; playersOnline: string[]; leaderboard: Leaderboard; chat: ChatMessage[] }) => {
+        lobby.onMessage('lobby_state', (state: { rooms: RoomListing[]; playersOnline: string[]; leaderboard: Leaderboard }) => {
           setRooms(state.rooms);
           setPlayersOnline(state.playersOnline);
           setLeaderboard(state.leaderboard);
-          setLobbyChat(state.chat);
         });
         lobby.onMessage('rooms', setRooms);
         lobby.onMessage('players_online', setPlayersOnline);
         lobby.onMessage('leaderboard', setLeaderboard);
-        lobby.onMessage('fox_chat', setLobbyChat);
+        lobby.onMessage('chat_history', ({ messages }: { messages: ChatEntry[] }) => setLobbyChat(messages));
+        lobby.onMessage('chat', (entry: ChatEntry) => setLobbyChat((history) => appendChat(history, entry)));
         lobby.onMessage('toaster', (toast: Toast) => emitToast(toast));
         lobby.onMessage('name_accepted', ({ username: accepted }: { username: string }) => {
           setUsername(accepted);
@@ -169,7 +169,7 @@ export const FoxProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const sendLobbyChat = useCallback((message: string, type?: 'emoji') => {
-    lobbyRef.current?.send('fox_chat', { message, type });
+    lobbyRef.current?.send('chat', { text: message, type });
   }, []);
 
   const resolveCode = useCallback(

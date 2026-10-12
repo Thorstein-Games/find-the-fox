@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
-import type { ChatMessage } from '../../lib/fox/types';
+import type { ChatBubble } from './types';
 import Message from './Message';
 
-const MessageList = ({ messageList, username }: { messageList: ChatMessage[]; username: string }) => {
+const MessageList = ({ messageList, username }: { messageList: ChatBubble[]; username: string }) => {
   const scrollList = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

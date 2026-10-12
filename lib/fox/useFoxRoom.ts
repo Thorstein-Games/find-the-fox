@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { takePendingGameRoom, useFox } from './FoxProvider';
 import { getStoredName } from './identity';
 import { emitToast } from './toastBus';
-import { EMPTY_SECRET, type ChatMessage, type FoxSecret, type FoxStateJSON, type Toast } from './types';
+import { EMPTY_SECRET, appendChat, type ChatEntry, type FoxSecret, type FoxStateJSON, type Toast } from './types';
 
 const REJOIN_DELAYS_MS = [500, 1000, 2000, 3000, 5000];
 const MAX_REJOIN_ATTEMPTS = 20;
@@ -22,7 +22,6 @@ const IGNORED_MESSAGES = [
   'spectator_joined',
   'spectator_left',
   'pong',
-  'chat',
 ];
 
 export function roomCodeOf(room: Room): string {
@@ -39,7 +38,7 @@ export interface FoxRoomConnection {
   state: FoxStateJSON | null;
   secret: FoxSecret;
   /** null until the room's chat history arrives */
-  chat: ChatMessage[] | null;
+  chat: ChatEntry[] | null;
   sessionId: string;
   connected: boolean;
   send: (type: string, payload?: unknown) => void;
@@ -57,7 +56,7 @@ export function useFoxRoom(roomCode: string): FoxRoomConnection {
   const { connected: lobbyConnected, resolveCode, joinGame } = useFox();
   const [state, setState] = useState<FoxStateJSON | null>(null);
   const [secret, setSecret] = useState<FoxSecret>(EMPTY_SECRET);
-  const [chat, setChat] = useState<ChatMessage[] | null>(null);
+  const [chat, setChat] = useState<ChatEntry[] | null>(null);
   const [sessionId, setSessionId] = useState('');
   const [connected, setConnected] = useState(false);
 
@@ -86,7 +85,8 @@ export function useFoxRoom(roomCode: string): FoxRoomConnection {
 
       IGNORED_MESSAGES.forEach((type) => room.onMessage(type, () => {}));
       room.onMessage('fox_secret', (next: FoxSecret) => setSecret(next));
-      room.onMessage('fox_chat', (messages: ChatMessage[]) => setChat(messages));
+      room.onMessage('chat_history', ({ messages }: { messages: ChatEntry[] }) => setChat(messages));
+      room.onMessage('chat', (entry: ChatEntry) => setChat((history) => appendChat(history, entry)));
       room.onMessage('toaster', (toast: Toast) => emitToast(toast));
       room.onMessage('error', ({ message }: { message: string }) =>
         emitToast({ title: 'Error', message, type: 'error' }),

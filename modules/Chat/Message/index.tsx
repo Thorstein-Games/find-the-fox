@@ -1,9 +1,9 @@
 import { memo } from 'react';
 
-import type { ChatMessage } from '../../../lib/fox/types';
+import type { ChatBubble } from '../types';
 import TextMessage from './TextMessage';
 
-const Message = ({ chat, username }: { chat: ChatMessage; username: string }) => {
+const Message = ({ chat, username }: { chat: ChatBubble; username: string }) => {
   const renderMessageOfType = (type?: string) => {
     switch (type) {
       case 'emoji':

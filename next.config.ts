@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   // Megingjord server; nothing here needs a Node server. `next dev` is
   // unaffected.
   output: 'export',
+  // e.g. "/find-the-fox" when served from a GitHub Pages project URL; empty at a domain root.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH?.replace(/\/+$/, '') || undefined,
   // Folder-style URLs (/lobby/index.html) so static hosts serve /lobby without rewrites.
   trailingSlash: true,
   images: { unoptimized: true },

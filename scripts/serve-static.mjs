@@ -1,13 +1,15 @@
 // Serve the static export the way GitHub Pages does: the exact file, then
 // dir/index.html, then path.html, else 404.html with a 404 status (which is
 // how /room/<code> links reach the room page). Used by `pnpm preview` and e2e.
-// usage: node scripts/serve-static.mjs [dir=out] [port=3000]
+// usage: node scripts/serve-static.mjs [dir=out] [port=3000] [basePath, e.g. /find-the-fox]
 import fs from 'fs';
 import http from 'http';
 import path from 'path';
 
 const root = path.resolve(process.argv[2] || 'out');
 const port = Number(process.argv[3] || 3000);
+// Mount the site under a sub-path, like a GitHub Pages project URL.
+const base = (process.argv[4] || '').replace(/\/+$/, '');
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript',
@@ -27,7 +29,15 @@ const isFile = (f) => f.startsWith(root) && fs.existsSync(f) && fs.statSync(f).i
 
 http
   .createServer((req, res) => {
-    const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (base) {
+      if (pathname !== base && !pathname.startsWith(`${base}/`)) {
+        res.writeHead(404, { 'content-type': 'text/plain' });
+        res.end('Not found (outside base path)');
+        return;
+      }
+      pathname = pathname.slice(base.length) || '/';
+    }
     for (const candidate of [pathname, path.join(pathname, 'index.html'), `${pathname}.html`]) {
       const file = path.join(root, candidate);
       if (isFile(file)) {
@@ -37,11 +47,11 @@ http
       }
     }
     if (!pathname.endsWith('/') && isFile(path.join(root, pathname, 'index.html'))) {
-      res.writeHead(301, { location: `${pathname}/` });
+      res.writeHead(301, { location: `${base}${pathname}/` });
       res.end();
       return;
     }
     res.writeHead(404, { 'content-type': types['.html'] });
     fs.createReadStream(path.join(root, '404.html')).pipe(res);
   })
-  .listen(port, () => console.log(`Serving ${root} on http://localhost:${port} (GitHub Pages style)`));
+  .listen(port, () => console.log(`Serving ${root} on http://localhost:${port}${base}/ (GitHub Pages style)`));

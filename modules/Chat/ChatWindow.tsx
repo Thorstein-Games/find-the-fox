@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 
 import useIsMobile from '../../hooks/useIsMobile';
-import type { ChatMessage } from '../../lib/fox/types';
+import type { ChatBubble } from './types';
 import Header from './Header';
 import MessageList from './MessageList';
 import UserInput from './UserInput';
 import type { OutgoingMessage } from './types';
 
 interface ChatWindowProps {
-  messageList: ChatMessage[];
+  messageList: ChatBubble[];
   onMessageWasSent: (message: OutgoingMessage) => void;
   headerName: string;
   isOpen: boolean;

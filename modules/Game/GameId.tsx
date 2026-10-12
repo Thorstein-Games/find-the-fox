@@ -5,16 +5,17 @@ import Popover from 'react-bootstrap/Popover';
 
 import useCopyClipboard from '../../hooks/useCopyClipboard';
 import styles from './GameId.module.scss';
+import { basePath } from '../../lib/fox/basePath';
 
 const GameId = ({ roomId }: { roomId: string }) => {
   const [isCopied, setIsCopied] = useCopyClipboard();
 
   const copyRoomUrl = () => {
-    const roomUrl = `${window.location.origin}/room/${roomId}`;
+    const roomUrl = `${window.location.origin}${basePath}/room/${roomId}`;
     setIsCopied(roomUrl);
   };
 
-  const roomUrl = typeof window !== 'undefined' ? `${window.location.origin}/room/${roomId}` : '';
+  const roomUrl = typeof window !== 'undefined' ? `${window.location.origin}${basePath}/room/${roomId}` : '';
 
   const qrCodePopover = (
     <Popover id="qr-code-popover" className={styles.qrPopover}>

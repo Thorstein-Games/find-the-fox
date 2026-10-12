@@ -22,12 +22,19 @@ export interface Leaderboard {
   weekly: LeaderEntry;
 }
 
-export interface ChatMessage {
+/** Megingjord's shared ChatEntry (`chat` broadcasts, `chat_history`). */
+export interface ChatEntry {
+  playerName: string;
   message: string;
   timestamp: number;
-  username?: string;
-  prevUser?: string;
   type?: 'emoji';
+}
+
+/** Keep the same history size as the server. */
+export const CHAT_HISTORY_LIMIT = 50;
+
+export function appendChat(history: ChatEntry[] | null, entry: ChatEntry): ChatEntry[] {
+  return [...(history ?? []), entry].slice(-CHAT_HISTORY_LIMIT);
 }
 
 export type ToastType = 'info' | 'moreInfo' | 'success' | 'error' | 'warning';

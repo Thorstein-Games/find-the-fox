@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 
+# Deploys whatever is on the repository's default branch (main, once it
+# exists). Run it by hand from the Actions tab too.
 on:
   push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -16,9 +17,14 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref_name == github.event.repository.default_branch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Tells us where Pages serves the site: "/find-the-fox" on
+      # thorstein-games.github.io, "" once a custom domain is configured.
+      - id: pages
+        uses: actions/configure-pages@v5
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -27,6 +33,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
         env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           # Optional repo variable; defaults to wss://megingjord.onrender.com
           NEXT_PUBLIC_GAME_SERVER_URL: ${{ vars.GAME_SERVER_URL }}
       - uses: actions/upload-pages-artifact@v3

@@ -168,7 +168,7 @@ const Game = ({ roomCode }: { roomCode: string }) => {
           </Row>
         </Container>
       </div>
-      <Chat headerName={roomState.id} playerName={username} messages={chat} onSend={(message, type) => send('fox_chat', { message, type })} />
+      <Chat headerName={roomState.id} playerName={username} messages={chat} onSend={(message, type) => send('chat', { text: message, type })} />
     </>
   );
 };

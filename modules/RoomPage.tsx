@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import Game from './Game';
 import PageLayout from './PageLayout';
+import { stripBasePath } from '../lib/fox/basePath';
 
 /**
  * Room codes live in the path (/room/ABC123), as in sheeple-game. The page
@@ -18,7 +19,7 @@ export const RoomPage = () => {
   const [roomCode, setRoomCode] = useState<string | null>(null);
 
   useEffect(() => {
-    setRoomCode(roomCodeFromPath(window.location.pathname));
+    setRoomCode(roomCodeFromPath(stripBasePath(window.location.pathname)));
   }, []);
 
   return <PageLayout>{roomCode ? <Game key={roomCode} roomCode={roomCode} /> : null}</PageLayout>;

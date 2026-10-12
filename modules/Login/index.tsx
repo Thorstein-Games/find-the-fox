@@ -15,6 +15,7 @@ import RecommendedAge from '../SVG/Age';
 import Clock from '../SVG/Clock';
 import Players from '../SVG/Players';
 import styles from './login.module.scss';
+import { asset } from '../../lib/fox/basePath';
 
 /** Only follow same-site room links after login. */
 function safeNext(next: unknown): string {
@@ -48,7 +49,7 @@ const Login = () => {
     <Container className={styles.wrapper}>
       <Image
         alt="Play Find the Fox, an online party game like The Chameleon"
-        src="/banner.png"
+        src={asset('/banner.png')}
         className={styles.banner}
         width={350}
         height={350}
