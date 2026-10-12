@@ -11,6 +11,10 @@ const Leaderboard = () => {
     return null;
   }
 
+  // The board keeps one leader per period; an empty period shows "0 points", as before.
+  const daily = leaderboard.daily?.entries[0];
+  const weekly = leaderboard.weekly?.entries[0];
+
   return (
     <div className={styles['leaderboard-wrapper']}>
       <h3>🏆 Leaderboard</h3>
@@ -21,8 +25,8 @@ const Leaderboard = () => {
               <Badge>Daily Leader</Badge>
             </Card.Title>
             <Card.Text className={styles['leader-info']}>
-              <span className={styles['leader-name']}>{leaderboard.daily.name}</span>
-              <span className={styles['leader-points']}>{leaderboard.daily.points} points</span>
+              <span className={styles['leader-name']}>{daily?.name ?? ''}</span>
+              <span className={styles['leader-points']}>{daily?.points ?? 0} points</span>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -32,8 +36,8 @@ const Leaderboard = () => {
               <Badge>Weekly Leader</Badge>
             </Card.Title>
             <Card.Text className={styles['leader-info']}>
-              <span className={styles['leader-name']}>{leaderboard.weekly.name}</span>
-              <span className={styles['leader-points']}>{leaderboard.weekly.points} points</span>
+              <span className={styles['leader-name']}>{weekly?.name ?? ''}</span>
+              <span className={styles['leader-points']}>{weekly?.points ?? 0} points</span>
             </Card.Text>
           </Card.Body>
         </Card>

@@ -50,6 +50,7 @@ const Login = () => {
       <Image
         alt="Play Find the Fox, an online party game like The Chameleon"
         src={asset('/banner.png')}
+        priority
         className={styles.banner}
         width={350}
         height={350}

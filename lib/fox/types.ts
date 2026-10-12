@@ -11,15 +11,21 @@ export interface RoomListing {
   privateRoom: boolean;
 }
 
+/** megingjord's shared leaderboard service (utils/leaderboard.ts). Find the Fox keeps 1 entry per period. */
 export interface LeaderEntry {
   name: string;
   points: number;
-  lastReset: string;
+  at: number;
+}
+
+export interface LeaderboardPeriod {
+  periodStart: string;
+  entries: LeaderEntry[];
 }
 
 export interface Leaderboard {
-  daily: LeaderEntry;
-  weekly: LeaderEntry;
+  daily?: LeaderboardPeriod;
+  weekly?: LeaderboardPeriod;
 }
 
 /** Megingjord's shared ChatEntry (`chat` broadcasts, `chat_history`). */

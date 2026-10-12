@@ -125,6 +125,8 @@ export const FoxProvider = ({ children }: { children: ReactNode }) => {
 
         const storedName = getStoredName();
         if (storedName) setUsername(storedName);
+        // Handlers are registered: now the lobby may send its initial state.
+        lobby.send('client_ready');
       } catch (error) {
         console.error('Failed to connect to the game server:', error);
         setConnected(false);

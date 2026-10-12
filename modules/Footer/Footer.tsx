@@ -28,8 +28,8 @@ const Footer: React.FC = () => {
           {links.map((link: LinkItem) => (
             <li key={link.label} className={styles.linkItem}>
               {link.internal ? (
-                <Link href={link.href} legacyBehavior>
-                  <a className={styles.link}>{link.label}</a>
+                <Link href={link.href} className={styles.link}>
+                  {link.label}
                 </Link>
               ) : (
                 <a href={link.href} className={styles.link} target="_blank" rel="noopener noreferrer">
