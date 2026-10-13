@@ -1,31 +1,6 @@
-import { expect, test, type Browser, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-// Names are unique site-wide, so suffix them per run.
-const run = Date.now().toString(36).slice(-4);
-const nameFor = (base: string) => `${base}${run}`;
-
-async function login(browser: Browser, name: string, path = '/'): Promise<Page> {
-  const page = await (await browser.newContext()).newPage();
-  await page.goto(path);
-  await page.getByLabel('Player Name').fill(name);
-  await page.getByRole('button', { name: 'Enter Lobby' }).click();
-  return page;
-}
-
-async function hostGame(page: Page, { privateRoom = false } = {}): Promise<string> {
-  await page.getByRole('button', { name: 'Host Game' }).first().click();
-  if (privateRoom) await page.locator('#privateRoom').check();
-  await page.locator('.modal').getByRole('button', { name: 'Host Game' }).click();
-  await page.waitForURL('**/room/**');
-  const button = page.getByTitle('Copy room URL to share with friends');
-  await expect(button).toBeVisible();
-  return (await button.innerText()).replace(/[^A-Z0-9]/g, '');
-}
-
-async function joinFromLobby(page: Page, host: string) {
-  await page.locator('.card', { hasText: `Host: ${host}` }).getByRole('button', { name: 'Join Game' }).click();
-  await page.waitForURL('**/room/**');
-}
+import { hostGame, joinFromLobby, login, nameFor } from './helpers';
 
 test('a full round: clues, catching the fox, and its guess', async ({ browser }) => {
   const [ann, ben, cat] = ['Ann', 'Ben', 'Cat'].map(nameFor);
@@ -75,6 +50,12 @@ test('a full round: clues, catching the fox, and its guess', async ({ browser })
   const foxRow = a.locator('tbody tr').filter({ has: a.locator('td:first-child', { hasText: new RegExp(`^${foxName}$`) }) });
   await expect(foxRow.locator('td').nth(1)).toHaveText('1');
   await expect(a.getByRole('button', { name: 'Next Round' })).toBeVisible();
+
+  // Scores feed the site-wide leaderboard (megingjord's shared leaderboard service).
+  await fox.getByRole('button', { name: /Leave Room/ }).click();
+  await fox.waitForURL('**/lobby/**');
+  const daily = fox.locator('.card', { hasText: 'Daily Leader' });
+  await expect(daily.getByText(/[1-9]\d* points/)).toBeVisible();
 });
 
 test('shared links, private rooms and kicking', async ({ browser }) => {

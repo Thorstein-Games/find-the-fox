@@ -37,6 +37,15 @@ const PlayerOptions = ({ actions, username, gameState, roomState, players, allCl
     }
   }, [inProgress]);
 
+  // A submitted clue comes from the private fox_secret, which can arrive after
+  // the first render (e.g. after a reload); show it once it does.
+  const submittedClue = clueReady ? gameState.players?.[username]?.clue || '' : '';
+  useEffect(() => {
+    if (submittedClue) {
+      setClue(submittedClue);
+    }
+  }, [submittedClue]);
+
   const handleClueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setClue(value);
