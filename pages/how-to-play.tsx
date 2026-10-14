@@ -4,13 +4,14 @@ import styles from '../styles/content-page.module.scss';
 const HowToPlay = () => {
   return (
     <PageLayout
-      title="How to Play"
-      description="Learn how to play Find the Fox online - the ultimate social deduction game. Master the rules, strategies, and tips to become the perfect fox or detective!"
+      title="How to Play the Chameleon Game Online"
+      description="How to play chameleon online with Find the Fox: rules, scoring and tips for the chameleon game online with friends. Learn to blend in as the fox or catch them as a detective."
       url="/how-to-play"
     >
       <div className={styles.container}>
         <div className={styles.content}>
           <h1>How to Play Find the Fox</h1>
+          <h2>The Chameleon Game Online, Explained</h2>
 
           <section className={styles.section}>
             <h2>Game Overview</h2>
@@ -18,6 +19,11 @@ const HowToPlay = () => {
               Find the Fox is an exciting social deduction game where players work together to identify the hidden fox
               among them. One player is secretly the fox, while others are detectives trying to catch the fox without
               giving away too much information.
+            </p>
+            <p>
+              If you know The Chameleon board game, you already know how to play: the fox is our chameleon. Find the Fox
+              is how to play the chameleon game online with friends, with the board, roles, voting and scoring handled
+              for you in the browser.
             </p>
           </section>
 

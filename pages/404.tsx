@@ -22,7 +22,7 @@ const NotFound = () => {
   if (mode === 'pending') return null;
 
   return (
-    <PageLayout title="Page Not Found" showFox>
+    <PageLayout title="Page Not Found" showFox noIndex>
       <div style={{ textAlign: 'center', padding: '80px 16px' }}>
         <h1>Page not found</h1>
         <p>

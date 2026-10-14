@@ -48,15 +48,15 @@ const Login = () => {
   return (
     <Container className={styles.wrapper}>
       <Image
-        alt="Play Find the Fox, an online party game like The Chameleon"
+        alt="Find the Fox – play the chameleon game online with friends"
         src={asset('/banner.png')}
         priority
         className={styles.banner}
         width={350}
         height={350}
       />
-      <h1>Play Find the Fox</h1>
-      <h2>The Online Hidden-Identity Party Game</h2>
+      <h1>Find the Fox: The Chameleon Game Online</h1>
+      <h2>Play Chameleon Online with Friends – Free, No Download</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="user-name">
           <Form.Label>Player Name</Form.Label>
@@ -101,14 +101,24 @@ const Login = () => {
         Support us on Patreon!
       </a>
       <section style={{ marginTop: 16 }}>
+        <h2>A Chameleon Game Website for Playing Online with Friends</h2>
+        <p>
+          Love The Chameleon party game? Find the Fox lets you play the chameleon game online, free, right in your
+          browser. One player is secretly the fox (the chameleon). Everyone else knows the secret word. Each player gives
+          a one-word clue, then everyone votes on who is bluffing. Create a private room and share the link to play
+          chameleon online with friends over Discord, Zoom or at a party, or join a public game from the lobby.
+        </p>
+      </section>
+      <section>
         <h2>The Rules</h2>
         <Rules />
       </section>
       <section>
         <h2>Disclaimer</h2>
         <p>
-          Find the Fox is an independent, fan-made party game inspired by classic word and deduction games. It is not
-          affiliated with or endorsed by any other company or product. All original artwork, code, and assets are the
+          Find the Fox is an independent, fan-made party game inspired by classic word and deduction games such as The
+          Chameleon. It is not affiliated with or endorsed by Big Potato Games or any other company or product. The
+          Chameleon is a trademark of its respective owner. All original artwork, code, and assets are the
           property of their respective creators. By using this site, you agree that cookies and ads may be used to
           support hosting and development costs.
         </p>

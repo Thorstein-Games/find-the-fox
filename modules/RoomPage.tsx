@@ -22,6 +22,6 @@ export const RoomPage = () => {
     setRoomCode(roomCodeFromPath(stripBasePath(window.location.pathname)));
   }, []);
 
-  return <PageLayout>{roomCode ? <Game key={roomCode} roomCode={roomCode} /> : null}</PageLayout>;
+  return <PageLayout noIndex>{roomCode ? <Game key={roomCode} roomCode={roomCode} /> : null}</PageLayout>;
 };
 

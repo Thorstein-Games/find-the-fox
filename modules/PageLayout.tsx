@@ -9,8 +9,29 @@ import { ErrorBoundary } from './ErrorBoundary';
 import Footer from './Footer/Footer';
 import { asset } from '../lib/fox/basePath';
 
-const defaultTitle = 'Find the Fox – Free Online Party Game Like The Chameleon';
-const defaultDescription = `Play Find the Fox, a free online party game inspired by The Chameleon. Guess, bluff, and outsmart your friends in this hilarious hidden-identity game!`;
+// SEO: Search Console shows most of our traffic searching for The Chameleon
+// ("play chameleon online", "chameleon game online", "chameleon game website",
+// "chameleon game online with friends"), so titles, descriptions and headings
+// lead with those phrases while keeping the Find the Fox brand.
+const homeTitle = 'Play Chameleon Online – Free Chameleon Game with Friends | Find the Fox';
+const titleSuffix = 'Find the Fox – Chameleon Game Online';
+const defaultDescription =
+  'Play chameleon online for free with Find the Fox, the chameleon game website for friends. No download or sign-up: create a room, share the link, give clues and catch the hidden fox in your browser.';
+const keywords = [
+  'play chameleon online',
+  'chameleon game online',
+  'chameleon game online with friends',
+  'chameleon game website',
+  'the chameleon game online',
+  'chameleon online free',
+  'find the fox',
+  'find the fox game online',
+  'online party game',
+  'hidden identity game',
+  'social deduction game',
+  'word game with friends',
+  'free browser game',
+].join(', ');
 const baseUrl = siteConfig.url;
 
 interface LayoutProps {
@@ -21,6 +42,8 @@ interface LayoutProps {
   title?: string;
   url?: string;
   showFox?: boolean;
+  /** Keep the page out of search results (game rooms, 404). */
+  noIndex?: boolean;
 }
 
 const Layout = ({
@@ -31,10 +54,13 @@ const Layout = ({
   googleSiteVerification = '',
   url = '',
   showFox = false,
+  noIndex = false,
 }: LayoutProps) => {
   const isMobile = useIsMobile();
-  const finalTitle = title ? `${title} | ${defaultTitle}` : defaultTitle;
+  const finalTitle = title ? `${title} | ${titleSuffix}` : homeTitle;
   const finalUrl = `${baseUrl}${url}`;
+  // Open Graph needs an absolute image URL.
+  const finalOgImage = /^https?:\/\//.test(ogImage) ? ogImage : `${baseUrl}${asset(ogImage)}`;
   return (
     <ErrorBoundary>
       <Head>
@@ -47,20 +73,22 @@ const Layout = ({
         <meta name="description" content={description} />
         <meta
           name="keywords"
-          content="find the fox, chameleon game online, chameleon online, online party game, hidden identity game, social deduction game, play chameleon online, free browser game, chameleon alternative, find the fox game online, play with friends, guessing game"
+          content={keywords}
         />
+        {noIndex && <meta name="robots" content="noindex" />}
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Find the Fox" />
         <meta property="og:title" content={finalTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={finalUrl} />
-        <meta property="og:image" content={ogImage} />
+        <meta property="og:image" content={finalOgImage} />
         {/* twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={finalUrl} />
         <meta property="twitter:title" content={finalTitle} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={ogImage} />
+        <meta property="twitter:image" content={finalOgImage} />
         {/* other */}
         {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
       </Head>
@@ -70,7 +98,7 @@ const Layout = ({
           <div className="hidden-fox">
             <div className="inner-hidden-fox">
               <Image
-                alt="Play Find the Fox, an online party game like The Chameleon"
+                alt="Find the Fox – play the chameleon game online with friends"
                 priority
                 height={isMobile ? 100 : 128}
                 width={isMobile ? 100 : 128}
