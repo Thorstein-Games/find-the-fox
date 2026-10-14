@@ -58,7 +58,7 @@ const Layout = ({
 }: LayoutProps) => {
   const isMobile = useIsMobile();
   const finalTitle = title ? `${title} | ${titleSuffix}` : homeTitle;
-  const finalUrl = `${baseUrl}${url}`;
+  const finalUrl = `${baseUrl}${url || '/'}`;
   // Open Graph needs an absolute image URL.
   const finalOgImage = /^https?:\/\//.test(ogImage) ? ogImage : `${baseUrl}${asset(ogImage)}`;
   return (
@@ -75,7 +75,7 @@ const Layout = ({
           name="keywords"
           content={keywords}
         />
-        {noIndex && <meta name="robots" content="noindex" />}
+        {noIndex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={finalUrl} />}
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Find the Fox" />

@@ -7,7 +7,7 @@ const isProd = process.env.NODE_ENV === 'production';
 export const siteConfig = {
   development: !isProd,
   ga: isProd ? 'G-PKG6DHM8QM' : '',
-  url: isProd ? 'https://find-the-fox.com' : 'http://localhost:3000',
+  url: isProd ? 'https://www.find-the-fox.com' : 'http://localhost:3000',
 };
 
 /** Megingjord game server: local in development, the shared deployment otherwise. */

@@ -30,17 +30,34 @@ const FAQ = () => {
               <h3>How do I play the chameleon game online with friends?</h3>
               <p>
                 Enter a player name on <Link href="/">the home page</Link>, host a private room in the lobby, and send
-                your friends the room link or code. Once 3 or more players have joined, the host starts the game. Pair it
-                with a video or voice call for the full party-game experience.
+                your friends the room link or code. Once 3 or more players have joined, the host starts the game. Pair
+                it with a video or voice call for the full party-game experience.
               </p>
             </div>
 
             <div className={styles.faqItem}>
               <h3>Is Find the Fox the official Chameleon game?</h3>
               <p>
-                No. Find the Fox is an independent, fan-made game inspired by The Chameleon. It is not affiliated with or
-                endorsed by Big Potato Games.
+                No. Find the Fox is an independent, fan-made game inspired by The Chameleon. It is not affiliated with
+                or endorsed by Big Potato Games.
               </p>
+            </div>
+
+            <div className={styles.faqItem}>
+              <h3>How is Find the Fox different from The Chameleon?</h3>
+              <p>
+                The core game is the same: one hidden player (the fox instead of the chameleon) doesn&apos;t know the
+                secret word and has to bluff a clue. A few things are different online:
+              </p>
+              <ul>
+                <li>The word grid and secret word are picked for you, so there are no code cards or dice.</li>
+                <li>Everyone types their clue at the same time instead of saying it aloud in turn.</li>
+                <li>
+                  The host can let the fox see one random player&apos;s clue before giving theirs, which makes bluffing
+                  easier.
+                </li>
+                <li>Optional rules: 1 point for voting for the fox, anonymous voting and a 1-minute clue timer.</li>
+              </ul>
             </div>
 
             <div className={styles.faqItem}>

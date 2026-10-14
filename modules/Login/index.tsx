@@ -56,7 +56,6 @@ const Login = () => {
         height={350}
       />
       <h1>Find the Fox: The Chameleon Game Online</h1>
-      <h2>Play Chameleon Online with Friends – Free, No Download</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="user-name">
           <Form.Label>Player Name</Form.Label>
@@ -90,6 +89,7 @@ const Login = () => {
           </div>
         </div>
       </Form>
+      <h2 className={styles.tagline}>Play Chameleon Online with Friends</h2>
       <p>Cookies are required to play. 🍪</p>
       <Link href="/how-to-play">How to Play</Link>
       <br />
