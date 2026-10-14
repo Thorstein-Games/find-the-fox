@@ -4,13 +4,14 @@ import styles from '../styles/content-page.module.scss';
 const WhyToPlay = () => {
   return (
     <PageLayout
-      title="Why Play Find the Fox"
-      description="Discover why Find the Fox is the perfect online party game for friends, families, and team building. Free, fun, and engaging social deduction gameplay!"
+      title="Why Play the Chameleon Game Online"
+      description="Why Find the Fox is the best way to play chameleon online with friends, family and coworkers: a free chameleon game website with no downloads, no sign-up and quick rounds."
       url="/why-to-play"
     >
       <div className={styles.container}>
         <div className={styles.content}>
           <h1>Why Play Find the Fox?</h1>
+          <h2>The Free Way to Play Chameleon Online with Friends</h2>
 
           <section className={styles.section}>
             <h2>Perfect for Any Group</h2>

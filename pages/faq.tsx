@@ -6,8 +6,8 @@ import styles from '../styles/content-page.module.scss';
 const FAQ = () => {
   return (
     <PageLayout
-      title="Frequently Asked Questions"
-      description="Get answers to common questions about Find the Fox - from gameplay mechanics to technical support. Everything you need to know about playing online!"
+      title="Chameleon Game Online FAQ"
+      description="Answers about Find the Fox, the chameleon game online: how to play chameleon online with friends, players, rules and troubleshooting."
       url="/faq"
     >
       <div className={styles.container}>
@@ -16,6 +16,32 @@ const FAQ = () => {
 
           <section className={styles.section}>
             <h2>Getting Started</h2>
+
+            <div className={styles.faqItem}>
+              <h3>Can I play The Chameleon online?</h3>
+              <p>
+                Yes. Find the Fox is a free chameleon game website: same idea as The Chameleon party game, with a fox in
+                place of the chameleon. It runs in your browser on any phone, tablet or computer, so there is nothing to
+                download or buy.
+              </p>
+            </div>
+
+            <div className={styles.faqItem}>
+              <h3>How do I play the chameleon game online with friends?</h3>
+              <p>
+                Enter a player name on <Link href="/">the home page</Link>, host a private room in the lobby, and send
+                your friends the room link or code. Once 3 or more players have joined, the host starts the game. Pair it
+                with a video or voice call for the full party-game experience.
+              </p>
+            </div>
+
+            <div className={styles.faqItem}>
+              <h3>Is Find the Fox the official Chameleon game?</h3>
+              <p>
+                No. Find the Fox is an independent, fan-made game inspired by The Chameleon. It is not affiliated with or
+                endorsed by Big Potato Games.
+              </p>
+            </div>
 
             <div className={styles.faqItem}>
               <h3>How do I join a game?</h3>
