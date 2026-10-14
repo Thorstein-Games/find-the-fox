@@ -9,8 +9,11 @@ const nextConfig: NextConfig = {
   output: 'export',
   // e.g. "/find-the-fox" when served from a GitHub Pages project URL; empty at a domain root.
   basePath: process.env.NEXT_PUBLIC_BASE_PATH?.replace(/\/+$/, '') || undefined,
-  // Folder-style URLs (/lobby/index.html) so static hosts serve /lobby without rewrites.
-  trailingSlash: true,
+  // No trailing slashes (/lobby -> lobby.html, which GitHub Pages and Netlify
+  // serve as /lobby). thorsteingames.com proxies /find-the-fox/* here, and its
+  // Next.js strips trailing slashes; folder-style URLs would make GitHub Pages
+  // redirect back to the slash form on github.io, off thorsteingames.com.
+  trailingSlash: false,
   images: { unoptimized: true },
   reactStrictMode: false,
   sassOptions: {

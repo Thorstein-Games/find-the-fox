@@ -40,7 +40,7 @@ test('when the host leaves, another player takes over', async ({ browser }) => {
   const [hostName, ...rest] = names;
 
   await pages[hostName].getByRole('button', { name: /Leave Room/ }).click();
-  await pages[hostName].waitForURL('**/lobby/**');
+  await pages[hostName].waitForURL('**/lobby');
 
   for (const name of rest) await expect(playerRows(pages[name])).toHaveCount(2);
   await expect(pages[rest[0]].getByText('A new host has been assigned', { exact: false })).toBeVisible();
