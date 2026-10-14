@@ -36,7 +36,7 @@ export const playerRows = (page: Page) =>
 export async function seatPlayers(browser: Browser, names: string[]): Promise<Record<string, Page>> {
   const [hostName, ...guests] = names;
   const host = await login(browser, hostName);
-  await host.waitForURL('**/lobby/**');
+  await host.waitForURL('**/lobby');
   await hostGame(host);
   const pages: Record<string, Page> = { [hostName]: host };
   for (const name of guests) {

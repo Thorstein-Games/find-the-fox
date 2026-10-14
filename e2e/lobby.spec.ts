@@ -8,9 +8,9 @@ import { hostGame, joinFromLobby, login, nameFor, openChat, sendChat } from './h
 test('lobby chat and players online', async ({ browser }) => {
   const [ada, bo] = ['Ada', 'Bo'].map(nameFor);
   const a = await login(browser, ada);
-  await a.waitForURL('**/lobby/**');
+  await a.waitForURL('**/lobby');
   const b = await login(browser, bo);
-  await b.waitForURL('**/lobby/**');
+  await b.waitForURL('**/lobby');
 
   await b.getByText(/Players online: \d+/).hover();
   await expect(b.locator('#tooltip-player-names')).toContainText(ada);
@@ -29,7 +29,7 @@ test('lobby chat and players online', async ({ browser }) => {
 test('room chat is replayed to players who join later', async ({ browser }) => {
   const [cy, di] = ['Cy', 'Di'].map(nameFor);
   const c = await login(browser, cy);
-  await c.waitForURL('**/lobby/**');
+  await c.waitForURL('**/lobby');
   await hostGame(c);
   const early = `before you came ${Date.now()}`;
   await sendChat(c, early);
