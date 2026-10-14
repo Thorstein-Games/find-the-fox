@@ -58,8 +58,7 @@ const Layout = ({
 }: LayoutProps) => {
   const isMobile = useIsMobile();
   const finalTitle = title ? `${title} | ${titleSuffix}` : homeTitle;
-  // trailingSlash is on, so pages are served at /path/.
-  const finalUrl = `${baseUrl}${url.replace(/\/?$/, '/')}`;
+  const finalUrl = `${baseUrl}${url || '/'}`;
   // Open Graph needs an absolute image URL.
   const finalOgImage = /^https?:\/\//.test(ogImage) ? ogImage : `${baseUrl}${asset(ogImage)}`;
   return (
