@@ -170,6 +170,7 @@ const Game = ({ roomCode }: { roomCode: string }) => {
             <Row>
               <Col>
                 <tg-more-games game="find-the-fox" className={styles['more-games']} />
+                <tg-ad game="find-the-fox" format="box" className={styles['round-ad']} />
               </Col>
             </Row>
           )}

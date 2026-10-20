@@ -36,6 +36,7 @@ pnpm test:e2e     # build + Playwright against ../megingjord (boots it via playw
 
 - The bar is always 40px. `global.scss` holds that space before the script loads (`tg-bar:not(:defined)`), `#__next` is `100vh - 40px` and `.main-content-wrapper` is at least that tall, so the footer starts below the fold.
 - `NEXT_PUBLIC_TG_BAR_SRC` overrides the script URL; `pnpm test:e2e` builds with it set to `""` so tests never load it from production.
+- Ads (`<tg-ad>`, rules and options in the thorstein-games-website CLAUDE.md): a `banner` above the footer (`Footer.tsx`) and a `box` under "Play a different game" between rounds. Never during a round. `_document.tsx` still loads AdSense in `<head>` (it verifies find-the-fox.com, and `public/ads.txt` authorises the publisher); `tg-bar.js` reuses it. Keep Auto ads off in the AdSense dashboard. Check placements with `?tgads=preview`.
 
 ## Cross-repo notes
 

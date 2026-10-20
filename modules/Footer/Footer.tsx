@@ -20,40 +20,43 @@ const links: LinkItem[] = [
 ];
 
 // The shared Thorstein Games footer (tg-bar.js, see CLAUDE.md) with Find the
-// Fox's own links and social icons in it.
+// Fox's own links and social icons in it, and the page's banner ad above it.
 const Footer: React.FC = () => {
   return (
-    <tg-footer game="find-the-fox">
-      {links.map((link: LinkItem) =>
-        link.internal ? (
-          <Link key={link.label} href={link.href} className={styles.link}>
-            {link.label}
-          </Link>
-        ) : (
-          <a key={link.label} href={link.href} className={styles.link} target="_blank" rel="noopener noreferrer">
-            {link.label}
-          </a>
-        ),
-      )}
-      <a
-        href="https://www.facebook.com/findthefoxgame"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${styles.socialIcon} ${styles.facebookIcon}`}
-        aria-label="Follow us on Facebook"
-      >
-        <FacebookIcon />
-      </a>
-      <a
-        href="https://patreon.com/ThorsteinGames"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${styles.socialIcon} ${styles.patreonIcon}`}
-        aria-label="Support us on Patreon"
-      >
-        <PatreonIcon />
-      </a>
-    </tg-footer>
+    <>
+      <tg-ad game="find-the-fox" format="banner" className={styles.ad} />
+      <tg-footer game="find-the-fox">
+        {links.map((link: LinkItem) =>
+          link.internal ? (
+            <Link key={link.label} href={link.href} className={styles.link}>
+              {link.label}
+            </Link>
+          ) : (
+            <a key={link.label} href={link.href} className={styles.link} target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          ),
+        )}
+        <a
+          href="https://www.facebook.com/findthefoxgame"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.socialIcon} ${styles.facebookIcon}`}
+          aria-label="Follow us on Facebook"
+        >
+          <FacebookIcon />
+        </a>
+        <a
+          href="https://patreon.com/ThorsteinGames"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${styles.socialIcon} ${styles.patreonIcon}`}
+          aria-label="Support us on Patreon"
+        >
+          <PatreonIcon />
+        </a>
+      </tg-footer>
+    </>
   );
 };
 

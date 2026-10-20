@@ -270,6 +270,11 @@
 }
 
 // "Play a different game" tiles (tg-bar.js) between rounds.
+// Between-rounds ad (tg-bar.js), kept clear of the game buttons above.
+.round-ad {
+  margin: 1.5rem 0;
+}
+
 .more-games {
   background: rgba(255, 255, 255, 0.92);
   border-radius: 12px;
