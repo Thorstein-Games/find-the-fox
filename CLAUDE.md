@@ -30,6 +30,13 @@ pnpm test:e2e     # build + Playwright against ../megingjord (boots it via playw
 - **Chat** uses megingjord's shared `chat` / `chat_history` protocol (`ChatEntry`). `modules/Chat/types.ts` groups entries into the bubble shape the chat UI renders.
 - `lib/fox/wordSheet.ts` mirrors megingjord's `src/games/find-the-fox/wordSheet.ts`. Keep them in sync.
 
+## Shared Thorstein Games bar and footer
+
+`pages/_document.tsx` loads `https://thorsteingames.com/tg-bar.js` (served by the thorstein-games-website repo, whose CLAUDE.md has the full contract) and renders `<tg-bar game="find-the-fox">` (thin site header, hides while scrolling down) before `<Main />`, outside `#__next` so the tablet border doesn't wrap it. `modules/Footer/Footer.tsx` renders `<tg-footer game="find-the-fox">` with Find the Fox's own links and social icons inside it (pages using `PageLayout`; rooms have no footer). The game view shows `<tg-more-games game="find-the-fox">` ("Play a different game") between rounds. JSX types for the tags are in `tg-elements.d.ts`.
+
+- The bar is always 40px. `global.scss` holds that space before the script loads (`tg-bar:not(:defined)`), `#__next` is `100vh - 40px` and `.main-content-wrapper` is at least that tall, so the footer starts below the fold.
+- `NEXT_PUBLIC_TG_BAR_SRC` overrides the script URL; `pnpm test:e2e` builds with it set to `""` so tests never load it from production.
+
 ## Cross-repo notes
 
 Message names and payloads are defined server-side: see megingjord's `FIND_THE_FOX.md` and `src/rooms/FoxRoom.ts` / `FoxLobbyRoom.ts`. When changing the protocol, change both repos. The e2e workflow tests against the megingjord branch with the same name when one exists.

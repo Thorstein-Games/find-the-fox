@@ -41,12 +41,20 @@ h2 {
   font-family: 'Permanent Marker', cursive;
 }
 
+// The shared Thorstein Games bar (tg-bar.js) is 40px; hold its space before
+// the script loads.
+tg-bar:not(:defined) {
+  background: #0b0b0e;
+  display: block;
+  height: 40px;
+}
+
 #__next {
   background: repeating-conic-gradient($green 0% 25%, $yellow 0% 50%) 50% / 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  min-height: calc(100vh - 40px);
   position: relative;
 
   @media (min-width: $tablet) {
@@ -55,6 +63,9 @@ h2 {
 }
 
 .main-content-wrapper {
+  // At least a screen tall under the bar, so the shared footer starts below
+  // the fold.
+  min-height: calc(100vh - 40px);
   position: relative;
 }
 

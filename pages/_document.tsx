@@ -4,6 +4,9 @@ import { siteConfig } from '../lib/fox/config';
 import { asset } from '../lib/fox/basePath';
 
 const GA = siteConfig.ga;
+// Shared Thorstein Games bar and footer (see CLAUDE.md). `pnpm test:e2e`
+// builds with this set to "" so tests don't load it from production.
+const TG_BAR_SRC = process.env.NEXT_PUBLIC_TG_BAR_SRC ?? 'https://thorsteingames.com/tg-bar.js';
 
 const Document = () => (
   <Html lang="en">
@@ -33,6 +36,7 @@ const Document = () => (
           />
         </>
       )}
+      {TG_BAR_SRC && <script async src={TG_BAR_SRC} />}
       {/* Google AdSense */}
       <script
         async
@@ -41,6 +45,8 @@ const Document = () => (
       />
     </Head>
     <body>
+      {/* Outside #__next so its tablet border doesn't wrap the bar. */}
+      <tg-bar game="find-the-fox" />
       <Main />
       <NextScript />
     </body>

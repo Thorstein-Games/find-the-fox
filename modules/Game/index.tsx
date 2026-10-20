@@ -166,6 +166,13 @@ const Game = ({ roomCode }: { roomCode: string }) => {
               {!isHost && <GameRules roomState={roomState} />}
             </Col>
           </Row>
+          {!inProgress && (
+            <Row>
+              <Col>
+                <tg-more-games game="find-the-fox" className={styles['more-games']} />
+              </Col>
+            </Row>
+          )}
         </Container>
       </div>
       <Chat headerName={roomState.id} playerName={username} messages={chat} onSend={(message, type) => send('chat', { text: message, type })} />
